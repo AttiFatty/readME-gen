@@ -9,39 +9,30 @@ const writeToFile = (fileName, data) => {
 }
 
 const init = async _ => {
-  let rmObject = {}
+  let gnrObject = {}
   do {
-    const { rmUser, rmRepo } = await prompt([
+    const { gnrUser, gnrRepo } = await prompt([
       {
         type: 'input',
-        name: 'rmUser',
+        name: 'gnrUser',
         message: 'What is your GitHub user name?'
       },
       {
         type: 'input',
-        name: 'rmRepo',
+        name: 'gnrRepo',
         message: 'What is your repository name?'
       }
     ])
-    rmObject = await api.getUser(rmUser, rmRepo)
-    if (!rmObject) {
+    gnrObject = await api.getUser(gnrUser, gnrRepo)
+    if (!gnrObject) {
       console.error('Repo not found!')
     } else {
-      console.log(`${rmObject.fullName} found!`)
+      console.log(`${gnrObject.fullName} found!`)
     }
-  } while (!rmObject)
-  // const ghApi = await api.getUser(rmUser)
-  Object.assign(rmObject, await prompt([
-    // {
-    //   type: 'input',
-    //   name: 'rmTitle',
-    //   message: 'What is the project title?'
-    // },
-    // {
-    //   type: 'input',
-    //   name: 'rmDesc',
-    //   message: 'What is the project description?'
-    // },
+  } while (!gnrObject)
+  // const ghApi = await api.getUser(gnrUser)
+  Object.assign(gnrObject, await prompt([
+
     {
       type: 'input',
       name: 'inst',
@@ -52,11 +43,7 @@ const init = async _ => {
       name: 'use',
       message: 'What is the usage description?'
     },
-    // {
-    //   type: 'input',
-    //   name: 'rmLic',
-    //   message: 'What is the license?'
-    // },
+   
     {
       type: 'input',
       name: 'con',
@@ -73,7 +60,7 @@ const init = async _ => {
       message: 'Any questions?'
     }
   ]))
-  writeToFile(rmObject.title, await generateMarkdown(rmObject))
+  writeToFile(gnrObject.title, await generateMarkdown(gnrObject))
 }
 
 init()
