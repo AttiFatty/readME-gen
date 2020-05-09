@@ -1,8 +1,8 @@
 const prompt = require('inquirer').createPromptModule()
 const fs = require('fs')
 
-const api = require('./utils/api.js')
-const generateMarkdown = require('./utils/generateMarkdown.js')
+const api = require('./rmTemp/temp.js')
+const generateMarkdown = require('./rmTemp/gnrMrkdwn.js')
 
 const writeToFile = (fileName, data) => {
   fs.writeFile(fileName + '.md', data, error => error ? console.error(error) : console.log(`${fileName + '.md'} generated!`))
@@ -30,34 +30,34 @@ const init = async _ => {
       console.log(`${gnrObject.fullName} found!`)
     }
   } while (!gnrObject)
-  // const ghApi = await api.getUser(gnrUser)
+  
   Object.assign(gnrObject, await prompt([
 
     {
       type: 'input',
       name: 'inst',
-      message: 'What are the installation instructions?'
+      message: 'INTALLATION PROCESS?'
     },
     {
       type: 'input',
       name: 'use',
-      message: 'What is the usage description?'
+      message: 'USAGE?'
     },
    
     {
       type: 'input',
       name: 'con',
-      message: 'Who are the contributors?'
+      message: 'CONTRIBUTORS?'
     },
     {
       type: 'input',
       name: 'test',
-      message: 'What are the tests?'
+      message: 'TESTS?'
     },
     {
       type: 'input',
       name: 'qs',
-      message: 'Any questions?'
+      message: 'QUESTIONS?'
     }
   ]))
   writeToFile(gnrObject.title, await generateMarkdown(gnrObject))
